@@ -1,1 +1,1 @@
-# wemos-rect
+# WeMos D1 mini rect
