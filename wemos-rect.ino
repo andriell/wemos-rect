@@ -30,8 +30,10 @@ void setup() {
 }
 
 void loop() {
-  ttfAlphabet();
-  delay(1000);
+  ttfAlphabet255();
+  delay(5000);
+  ttfAlphabet96();
+  delay(5000);
   wifiTftScan();
   delay(10000);
 }

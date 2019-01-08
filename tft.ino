@@ -27,14 +27,28 @@ void tftSetup() {
   tft.print("Connecting...");
 }
 
-void ttfAlphabet() {
+void ttfAlphabet96() {
+  tft.fillScreen(ST77XX_BLACK);
+  tft.setTextColor(ST77XX_WHITE);
+  tft.setTextSize(1);
+  char c = 32;
+  for (int y = 0; y < 6; y++) {
+    for (int x = 0; x < 16; x++) {
+      tft.setCursor(x * 8, y * 8);
+      tft.print(c);
+      c++;
+    }
+  }
+}
+
+void ttfAlphabet255() {
   tft.fillScreen(ST77XX_BLACK);
   tft.setTextColor(ST77XX_WHITE);
   tft.setTextSize(1);
   char c = 0;
-  for (int y = 0; y < 127; y += 8) {
-    for (int x = 0; x < 127; x += 8) {
-      tft.setCursor(x, y);
+  for (int y = 0; y < 16; y++) {
+    for (int x = 0; x < 16; x++) {
+      tft.setCursor(x * 8, y * 8);
       tft.print(c);
       c++;
     }
