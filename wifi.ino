@@ -1,6 +1,6 @@
 // Network SSID
 const char* wifiSsid = "Vika";
-const char* wifiPassword = "password";
+const char* wifiPassword = "w+79107385802";
 
 void wifiSetup() {
   
@@ -63,6 +63,53 @@ void wifiTestLoop() {
   // Print the IP address
   Serial.print("IP address: ");
   Serial.print(WiFi.localIP());
+}
+
+void wifiTftScan() {
+  WiFi.mode(WIFI_STA);
+  WiFi.disconnect();
+
+  tft.fillScreen(ST77XX_BLACK);
+  tft.setTextColor(ST77XX_MAGENTA);
+  tft.setTextSize(1);
+  tft.setTextWrap(false);
+  ttfSetCursor1(0, 0);
+  tft.print("WiFi disconnect");
+
+  // WiFi.scanNetworks will return the number of networks found
+  int n = WiFi.scanNetworks();
+  ttfSetCursor1(1, 0);
+  tft.print("scan done");
+  if (n == 0) {
+    ttfSetCursor1(2, 0);
+    tft.print("no networks found");
+  } else {
+    ttfSetCursor1(2, 0);
+    tft.print(n);
+    tft.print(" networks found");
+    for (int i = 0; i < n; ++i)
+    {
+      ttfSetCursor1(3 + i * 2, 0);
+      // Print SSID and RSSI for each network found
+      tft.setTextColor(ST77XX_GREEN);
+      tft.print(i + 1);
+      tft.print(" ");
+      tft.setTextColor(ST77XX_WHITE);
+      tft.print(WiFi.SSID(i));
+
+      ttfSetCursor1(4 + i * 2, 0);
+      tft.print("  ");
+      tft.setTextColor(ST77XX_RED);
+      tft.print(WiFi.RSSI(i));
+      tft.print(" dBm  ");
+      tft.setTextColor(ST77XX_YELLOW);
+      tft.print(WiFi.channel(i));
+      tft.print("  ");
+      tft.setTextColor(ST77XX_BLUE);
+      tft.print((String) wifiEncryptionTypeStr(WiFi.encryptionType(i)));
+      delay(10);
+    }
+  }
 }
 
 String wifiEncryptionTypeStr(uint8_t authmode) {
